@@ -14,7 +14,6 @@ public class FizzBuzzRunnerTest {
 
     private PrintStream originalSystemOut;
     private ByteArrayOutputStream writtenOutput;
-    private FizzBuzzRunner testInstance;
 
     @Before
     public void setup() {
@@ -22,8 +21,6 @@ public class FizzBuzzRunnerTest {
         PrintStream dummySystemOut = new PrintStream(writtenOutput);
         originalSystemOut = System.out;
         System.setOut(dummySystemOut);
-
-        testInstance = new FizzBuzzRunner();
     }
 
     @After
