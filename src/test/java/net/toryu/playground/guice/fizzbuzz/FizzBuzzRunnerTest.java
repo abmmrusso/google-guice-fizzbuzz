@@ -1,9 +1,11 @@
 package net.toryu.playground.guice.fizzbuzz;
 
+import com.google.inject.Inject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.xml.ws.BindingType;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 

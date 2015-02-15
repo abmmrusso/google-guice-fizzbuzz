@@ -1,7 +1,10 @@
 package net.toryu.playground.guice;
 
-import net.toryu.playground.guice.NumberTranslationRunner;
-import net.toryu.playground.guice.NumberTranslator;
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
@@ -12,12 +15,21 @@ import static org.junit.Assert.assertThat;
 
 public class NumberTranslationRunnerTest {
 
+    @Inject private NumberTranslationRunner testInstance;
+    @Inject private ByteArrayOutputStream writtenData;
+
+    @Before
+    public void setup() {
+        Guice.createInjector(new NumberTranslationRunnerTestModule()).injectMembers(this);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void givenLowerBoundGreaterThanUpperBoundThrowsIllegalArgumentException() {
+        testInstance.runNumberTranslation(5,1);
+    }
+
     @Test
     public void translatesAllNumbersFromLowerToUpperGivenBoundsAndWritesThemToOutput() {
-        ByteArrayOutputStream writtenData = new ByteArrayOutputStream();
-
-        NumberTranslationRunner testInstance = new NumberTranslationRunner(new DummyNumberTranslator(), new PrintStream(writtenData));
-
         testInstance.runNumberTranslation(1,5);
 
         String[] writtenLines = writtenData.toString().split(System.getProperty("line.separator"));
@@ -30,13 +42,14 @@ public class NumberTranslationRunnerTest {
         assertThat(writtenLines[4], equalTo(DummyNumberTranslator.TRANSLATION_PREFIX + "5"));
     }
 
-    private class DummyNumberTranslator implements NumberTranslator {
-
-        public static final String TRANSLATION_PREFIX = "translated-";
+    private class NumberTranslationRunnerTestModule extends AbstractModule {
 
         @Override
-        public String translate(int numberToTranslate) {
-            return TRANSLATION_PREFIX + numberToTranslate;
+        protected void configure() {
+            ByteArrayOutputStream writtenOutput = new ByteArrayOutputStream();
+            bind(ByteArrayOutputStream.class).toInstance(writtenOutput);
+            bind(NumberTranslator.class).to(DummyNumberTranslator.class);
+            bind(PrintStream.class).toInstance(new PrintStream(writtenOutput));
         }
     }
 }
