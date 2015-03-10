@@ -2,12 +2,13 @@ package net.toryu.playground.guice.fizzbuzz;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import net.toryu.playground.guice.CommandLineParser;
 import net.toryu.playground.guice.NumberTranslationRunner;
 import net.toryu.playground.guice.NumberTranslator;
 
 import java.io.PrintStream;
 
-public class FizzBuzzRunner {
+public class FizzBuzzMain {
 
     public static void main(String[] input) {
         if(input.length < 1) {
@@ -16,6 +17,6 @@ public class FizzBuzzRunner {
 
         Injector guiceInjector = Guice.createInjector(new FizzBuzzModule());
         NumberTranslationRunner fizzBuzzRunner = guiceInjector.getInstance(NumberTranslationRunner.class);
-        fizzBuzzRunner.runNumberTranslation(1,new FizzBuzzUpperLimitParser().parseUpperLimit(input[0]));
+        fizzBuzzRunner.runNumberTranslation(new CommandLineParser().parseCmdParameters(input));
     }
 }

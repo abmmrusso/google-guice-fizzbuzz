@@ -16,12 +16,12 @@ public class NumberTranslationRunner {
         this.outputStream = outputStream;
     }
 
-    public void runNumberTranslation(int lowerBound, int upperBound) {
-        if(lowerBound > upperBound) {
+    public void runNumberTranslation(NumberParameters inputData) {
+        if(inputData.getLowerLimit() > inputData.getUpperLimit()) {
             throw new IllegalArgumentException("Lower bound is greater than Upper bound.");
         }
 
-        for(int current = lowerBound; current <= upperBound; current++) {
+        for(int current = inputData.getLowerLimit(); current <= inputData.getUpperLimit(); current++) {
             outputStream.println(numberTranslator.translate(current));
         }
     }

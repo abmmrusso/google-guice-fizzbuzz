@@ -17,6 +17,7 @@ public class NumberTranslationRunnerTest {
 
     @Inject private NumberTranslationRunner testInstance;
     @Inject private ByteArrayOutputStream writtenData;
+    @Inject private NumberParameters testInputData;
 
     @Before
     public void setup() {
@@ -25,12 +26,16 @@ public class NumberTranslationRunnerTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void givenLowerBoundGreaterThanUpperBoundThrowsIllegalArgumentException() {
-        testInstance.runNumberTranslation(5,1);
+        testInputData.setLowerLimit(5);
+        testInputData.setUpperLimit(1);
+        testInstance.runNumberTranslation(testInputData);
     }
 
     @Test
     public void translatesAllNumbersFromLowerToUpperGivenBoundsAndWritesThemToOutput() {
-        testInstance.runNumberTranslation(1,5);
+        testInputData.setLowerLimit(1);
+        testInputData.setUpperLimit(5);
+        testInstance.runNumberTranslation(testInputData);
 
         String[] writtenLines = writtenData.toString().split(System.getProperty("line.separator"));
 

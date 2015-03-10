@@ -1,18 +1,16 @@
 package net.toryu.playground.guice.fizzbuzz;
 
-import com.google.inject.Inject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.xml.ws.BindingType;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class FizzBuzzRunnerTest {
+public class FizzBuzzMainTest {
 
     private PrintStream originalSystemOut;
     private ByteArrayOutputStream writtenOutput;
@@ -32,22 +30,22 @@ public class FizzBuzzRunnerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void givenNoParameterOnMainMethodExecutionThrowsIllegalArgumentException() {
-        FizzBuzzRunner.main(new String[]{});
+        FizzBuzzMain.main(new String[]{});
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenNonNumericValueAsParameterOnMainMethodExecutionThrowsIllegalArgumentException() {
-        FizzBuzzRunner.main(new String[] {"NonNumeric"});
+        FizzBuzzMain.main(new String[]{"NonNumeric"});
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenLowerThanOneAsUpperLimitOnMainMethodExecutionThrowsIllegalArgumentException() {
-        FizzBuzzRunner.main(new String[] {"0"});
+        FizzBuzzMain.main(new String[]{"0"});
     }
 
     @Test
     public void givenValidUpperLimitValueAsParameterOnMainMethodExecutionPerformsFizzBuzz() {
-        FizzBuzzRunner.main((new String[] {"15"}));
+        FizzBuzzMain.main((new String[]{"15"}));
 
         String[] writtenValuesPerLine = writtenOutput.toString().split(System.getProperty("line.separator"));
         assertThat(writtenValuesPerLine.length, equalTo(15));
