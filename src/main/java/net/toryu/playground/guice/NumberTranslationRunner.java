@@ -1,7 +1,6 @@
 package net.toryu.playground.guice;
 
 import com.google.inject.Inject;
-import net.toryu.playground.guice.NumberTranslator;
 
 import java.io.PrintStream;
 

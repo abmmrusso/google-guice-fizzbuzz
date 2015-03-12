@@ -1,8 +1,8 @@
 package net.toryu.playground.guice;
 
-import net.toryu.playground.guice.NumberParameters;
-
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Arrays;
 
 public class CommandLineParser {
 
