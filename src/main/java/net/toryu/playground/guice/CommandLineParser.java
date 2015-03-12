@@ -2,6 +2,8 @@ package net.toryu.playground.guice;
 
 import net.toryu.playground.guice.NumberParameters;
 
+import java.util.*;
+
 public class CommandLineParser {
 
     public NumberParameters parseCmdParameters(String[] cmdParameters) {
@@ -11,20 +13,22 @@ public class CommandLineParser {
 
         NumberParameters parsedParameters = new NumberParameters();
 
-        try {
-            parsedParameters.setUpperLimit(Integer.parseInt(cmdParameters[0]));
-        }catch(NumberFormatException nfe) {
-            throw new IllegalArgumentException("Upper limit must be numeric");
-        }
+        List<String> parameterStack = new LinkedList<>(Arrays.asList(cmdParameters));
 
-        if(cmdParameters.length > 1) {
+        if(parameterStack.size() > 1) {
             try {
-                parsedParameters.setLowerLimit(Integer.parseInt(cmdParameters[1]));
+                parsedParameters.setLowerLimit(Integer.parseInt(parameterStack.remove(0)));
             } catch (NumberFormatException nfe) {
                 throw new IllegalArgumentException("Lower limit must be numeric");
             }
         } else {
             parsedParameters.setLowerLimit(1);
+        }
+
+        try {
+            parsedParameters.setUpperLimit(Integer.parseInt(parameterStack.remove(0)));
+        }catch(NumberFormatException nfe) {
+            throw new IllegalArgumentException("Upper limit must be numeric");
         }
 
         if(parsedParameters.getUpperLimit() < parsedParameters.getLowerLimit()) {

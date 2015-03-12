@@ -44,13 +44,13 @@ public class CommandLineParserTest {
 
     @Test
     public void givenBothLimitParametersParsesThem() {
-        NumberParameters toTest = testInstance.parseCmdParameters(new String[] {"10", "2"});
+        NumberParameters toTest = testInstance.parseCmdParameters(new String[] {"2", "10"});
         assertThat(toTest.getUpperLimit(), equalTo(10));
         assertThat(toTest.getLowerLimit(), equalTo(2));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void givenUpperLimitLowerThanLowerLimitThrowsIllegalArgumentException() {
-        testInstance.parseCmdParameters(new String[] {"1", "2"});
+        testInstance.parseCmdParameters(new String[] {"2", "1"});
     }
 }
