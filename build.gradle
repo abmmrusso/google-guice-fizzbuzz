@@ -3,7 +3,7 @@ apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'application'
 
-mainClassName="net.toryu.playground.guice.fizzbuzz.FizzBuzzRunner"
+mainClassName="net.toryu.playground.guice.fizzbuzz.FizzBuzzMain"
 
 repositories {
     mavenCentral()
